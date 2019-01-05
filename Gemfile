@@ -13,3 +13,4 @@ gem 'pry'
 gem 'sinatra-activerecord'
 gem 'require_all' #helps to load dependencies
 gem 'shotgun'
+gem 'bcrypt'
