@@ -14,10 +14,17 @@ class UsersController < ApplicationController
       #but for now just reload page
       redirect to '/signup'
     else
-      @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
-      @user.save
-      session[:user_id] = @user_id
-      redirect to '/'
+      #if user account already exists with that email - user must sign up with a different email
+      if User.find_by_email(params[:email])
+        #eventually show an error message
+        #"Account already exists under that email address. User another email or go to the log in page"
+        redirect to '/signup'
+      else
+        @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
+        @user.save
+        session[:user_id] = @user_id
+        redirect to '/'
+      end
     end
   end
 
