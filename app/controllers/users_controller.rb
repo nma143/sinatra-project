@@ -14,8 +14,12 @@ class UsersController < ApplicationController
       #but for now just reload page
       redirect to '/signup'
     else
+      #don't accept invalid email addresss formats
+      email_ok = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)\z/.match(params[:email])
+      if !email_ok
+        redirect to '/signup'
       #if user account already exists with that email - user must sign up with a different email
-      if User.find_by_email(params[:email])
+      elsif User.find_by_email(params[:email])
         #eventually show an error message
         #"Account already exists under that email address. User another email or go to the log in page"
         redirect to '/signup'
