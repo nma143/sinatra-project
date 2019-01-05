@@ -1,0 +1,22 @@
+<% if logged_in? %>
+  <p>Hi <%= current_user.username %>! These are your options:</p>
+  <ul>
+  <li>See all your reviews</li>
+  <li>Write a new review</li>
+  <li><a href="/logout">Log out</a></li>
+  </ul>
+<% end %>
+
+<h2> Here's our book list: </h2>
+
+<% if @books.length==0 %>
+  <p>
+    (There are no books yet)
+  </p>
+<% else %>
+  <ul>
+  <% @books.each do |book| %>
+    <li><%= book.title %> <font size="-1">(by <%= book.author %>)</font></li>
+  <% end %>
+  </ul>
+<% end %>
