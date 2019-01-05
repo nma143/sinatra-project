@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     if !logged_in?
       erb :'users/create_user'
     else
-      "Sign up page says you're logged in"
+      redirect to '/books'
     end
   end
 
@@ -26,8 +26,8 @@ class UsersController < ApplicationController
       else
         @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
         @user.save
-        session[:user_id] = @user_id
-        redirect to '/'
+        session[:user_id] = @user.id
+        redirect to '/books'
       end
     end
   end
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     if !logged_in?
       erb :'users/login'
     else
-      "Logged in!"
+      redirect to '/books'
     end
   end
 
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     user = User.find_by(:email => params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect "/login"
+      redirect to '/books'
     else
       # Evenutally show an error message
       # Log in failed. If you have an account, try again. If not, go to the sign up page"
