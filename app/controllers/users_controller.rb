@@ -9,10 +9,16 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
-    @user.save
-    session[:user_id] = @user_id
-    redirect to '/'
+    if params[:username]=="" || params[:email]=="" || params[:password]==""
+      #eventually show error - there can be no blank fields
+      #but for now just reload page
+      redirect to '/signup'
+    else
+      @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
+      @user.save
+      session[:user_id] = @user_id
+      redirect to '/'
+    end
   end
 
   get '/login' do
