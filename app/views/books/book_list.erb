@@ -1,8 +1,8 @@
 <% if logged_in? %>
   <p>Hi <%= current_user.username %>! These are your options:</p>
   <ul>
-  <li>See all your reviews</li>
-  <li>Write a new review</li>
+  <li><a href="/users/<%=current_user.slug %>">See all your reviews</a></li>
+  <li><a href="/reviews/new">Write a new review</a></li>
   <li><a href="/logout">Log out</a></li>
   </ul>
 <% end %>
@@ -16,7 +16,17 @@
 <% else %>
   <ul>
   <% @books.each do |book| %>
-    <li><%= book.title %> <font size="-1">(by <%= book.author %>)</font></li>
+    <% if book.reviews.size >=1 %>
+      <% star_ratings = book.reviews.collect {|review| review.stars} %>
+      <li><%= book.title %> <font size="-1">(by <%= book.author %>)</font>
+      - Avg Star Rating: <%= star_ratings.sum/star_ratings.size.to_f %>
+      - <a href="/books/<%=book.slug %>">See book reviews</a>
+      </li>
+    <% else %>
+      <li><%= book.title %> <font size="-1">(by <%= book.author %>)</font>
+      - Avg Star Rating: N/A
+      </li>
+    <% end %>
   <% end %>
   </ul>
 <% end %>
