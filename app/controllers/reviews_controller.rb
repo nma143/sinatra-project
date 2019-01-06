@@ -2,7 +2,9 @@ class ReviewsController < ApplicationController
 
   get '/reviews/new' do
     if logged_in?
-      @books= Book.all
+      #A user can't review the same book twice.
+      #In the dropdown book selector, only show books they have not reviewed
+      @books_to_review = Book.all - current_user.books
       erb :'reviews/new'
     else
       redirect to '/'
