@@ -1,5 +1,7 @@
 <h2>Log in:</h2>
-
+<% if flash[:error] %>
+  <p style="color:red;"><%= flash[:error] %></p>
+<% end %>
 <form method="post" action="/login">
 <input type="text" name="email" placeholder="Email:">
 <input type="text" name="password" placeholder="Password:">
