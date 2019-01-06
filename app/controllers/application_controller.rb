@@ -1,3 +1,4 @@
+require 'sinatra/flash'
 class ApplicationController < Sinatra::Base
 
   configure do
@@ -6,6 +7,7 @@ class ApplicationController < Sinatra::Base
     enable :sessions
     set :session_secret, "secret_book_club"
   end
+  register Sinatra::Flash
 
   get '/' do
     if logged_in?
