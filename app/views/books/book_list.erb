@@ -1,3 +1,9 @@
+<% if flash[:message] %>
+  <p style="color:green;"><%= flash[:message] %></p>
+<% elsif flash[:error] %>
+  <p style="color:red;"><%= flash[:error] %></p>
+<% end %>
+
 <% if logged_in? %>
   <p>Hi <%= current_user.username %>! These are your options:</p>
   <ul>
