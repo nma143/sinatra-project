@@ -1,0 +1,11 @@
+<p> Here is a particular review by <%= @review.user.username %>: <p>
+<p><b>Book:</b> <%= @review.book.title %></p>
+<p><b>Author:</b> <%= @review.book.author %></p>
+<form action="/reviews/<%=@review.id%>/delete" method="POST">
+  <p><b>Star Rating:</b> <%= @review.stars %></p>
+  <p><b>Content:</b> <%= @review.content %></p>
+  <% if @review.user == current_user %>
+  <button type="submit" value="submit">Delete Review</button>
+  <br>
+  <% end %>
+</form>
