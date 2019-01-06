@@ -30,7 +30,12 @@ class ReviewsController < ApplicationController
   get '/reviews/:id' do
     if logged_in?
       @review = Review.find_by_id(params[:id])
-      erb :'reviews/show_review'
+      if @review
+        erb :'reviews/show_review'
+      else
+        flash[:error] = "That review could not be found"
+        redirect to '/'
+      end
     else
       redirect to '/'
     end
