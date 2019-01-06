@@ -21,7 +21,7 @@ class ReviewsController < ApplicationController
       else
         @review = Review.new(:content => params[:content], :stars => params[:stars], :user_id => session[:user_id], :book_id => params[:book_id])
         @review.save
-        redirect to "/books"
+        redirect to "/users/#{current_user.slug}"
       end
     end
   end
@@ -42,7 +42,7 @@ class ReviewsController < ApplicationController
         @review.delete
         #eventually show message: "Review was successfully deleted!"
       end
-      redirect to "/books"
+      redirect to "/users/#{current_user.slug}"
     else
       redirect to '/'
     end
@@ -79,7 +79,7 @@ class ReviewsController < ApplicationController
           end
         else
           #"Something went wrong. Review was not updated."
-          redirect to "/books"
+          redirect to "/users/#{current_user.slug}"
         end
       end
     else
