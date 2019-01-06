@@ -57,7 +57,10 @@ class ReviewsController < ApplicationController
   get '/reviews/:id/edit' do
     if logged_in?
       @review = Review.find_by_id(params[:id])
-      if @review && @review.user == current_user
+      if !@review
+        flash[:error] = "That review could not be found"
+        redirect to '/'
+      elsif @review.user == current_user
         erb :'reviews/edit'
       else
         flash[:error] = "You can't edit a review written by another user"
