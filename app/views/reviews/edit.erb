@@ -1,3 +1,9 @@
+<% if flash[:message] %>
+  <p style="color:green;"><%= flash[:message] %></p>
+<% elsif flash[:error] %>
+  <p style="color:red;"><%= flash[:error] %></p>
+<% end %>
+
 <form method="post" action="/reviews/<%=@review.id%>">
   <p><b><%= @review.book.title %></b> <font size="-1">(by <%= @review.book.author %>)</font></p>
   <input id="hidden" type="hidden" name="_method" value="PATCH">

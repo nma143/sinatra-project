@@ -1,3 +1,9 @@
+<% if flash[:message] %>
+  <p style="color:green;"><%= flash[:message] %></p>
+<% elsif flash[:error] %>
+  <p style="color:red;"><%= flash[:error] %></p>
+<% end %>
+
 <p> Here is a particular review by <%= @review.user.username %>: <p>
 <p><b>Book:</b> <%= @review.book.title %></p>
 <p><b>Author:</b> <%= @review.book.author %></p>

@@ -1,5 +1,7 @@
 <h2>New Review</h2>
-
+<% if flash[:error] %>
+  <p style="color:red;"><%= flash[:error] %></p>
+<% end %>
 <p><i>(You can only add a new review for a book you haven't reviewed yet)</i></p>
 <% if @books_to_review.size >= 1 %>
   <form action="/reviews/new" method="POST">
