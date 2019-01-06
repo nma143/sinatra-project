@@ -33,7 +33,18 @@ class ReviewsController < ApplicationController
     end
   end
 
-
+  post '/reviews/:id/delete' do
+    if logged_in?
+      @review = Review.find_by_id(params[:id])
+      if @review && @review.user == current_user
+        @review.delete
+        #eventually show message: "Review was successfully deleted!"
+      end
+      redirect to "/books"
+    else
+      redirect to '/'
+    end
+  end
 
 
 
