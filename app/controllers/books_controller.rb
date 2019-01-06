@@ -12,9 +12,14 @@ class BooksController < ApplicationController
   get '/books/:slug' do
     if logged_in?
       @book = Book.find_by_slug(params[:slug])
-      star_ratings = @book.reviews.collect {|review| review.stars}
-      @avg_star_rating = star_ratings.sum/star_ratings.size.to_f
-      
+      if @book
+        star_ratings = @book.reviews.collect {|review| review.stars}
+        @avg_star_rating = star_ratings.sum/star_ratings.size.to_f
+      else
+        flash[:error] = "That book could not be found"
+        redirect to '/'
+      end
+
       erb :'books/book_reviews'
     else
       redirect to '/'
