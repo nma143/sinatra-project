@@ -10,23 +10,23 @@ class UsersController < ApplicationController
 
   post '/signup' do
     if params[:username]=="" || params[:email]=="" || params[:password]==""
-      #eventually show error - there can be no blank fields
-      #but for now just reload page
+      flash[:error] = "No field can be blank"
       redirect to '/signup'
     else
       #don't accept invalid email addresss formats
       email_ok = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)\z/.match(params[:email])
       if !email_ok
+        flash[:error] = "Invalid email format"
         redirect to '/signup'
       #if user account already exists with that email - user must sign up with a different email
       elsif User.find_by_email(params[:email])
-        #eventually show an error message
-        #"Account already exists under that email address. User another email or go to the log in page"
+        flash[:error] = "Account already exsits under that email address. Use another email or go to the log in page"
         redirect to '/signup'
       else
         @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
         @user.save
         session[:user_id] = @user.id
+        flash[:message]="New account created!"
         redirect to '/books'
       end
     end
@@ -46,8 +46,7 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect to '/books'
     else
-      # Evenutally show an error message
-      # Log in failed. If you have an account, try again. If not, go to the sign up page"
+      flash[:error] = "Log in failed. If you have an account, try again. If not, go to the sign up page"
       redirect to '/login'
     end
   end
@@ -67,7 +66,7 @@ class UsersController < ApplicationController
       if session[:user_id] == @user.id
         erb :'users/show'
       else
-       #"You can't see another user's dashboard"
+       flash[:error] = "You can't see another user's dashboard"
        redirect to '/'
       end
     end
