@@ -9,3 +9,15 @@
   <br>
   <% end %>
 </form>
+<footer>
+  <br>
+  <% if @review.user == current_user %>
+    <p>Other options: </p>
+    <ul>
+    <li><a href="/reviews/<%=@review.id%>/edit">Edit this review</a></li>
+    <li><a href="/">Back to main page</a></li>
+    </ul>
+  <% else %>
+    <a href="/">Back to main page</a>
+  <% end %>
+</footer>
