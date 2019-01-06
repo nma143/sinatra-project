@@ -63,11 +63,11 @@ class UsersController < ApplicationController
       redirect to '/'
     else
       @user = User.find_by_slug(params[:slug])
-      if session[:user_id] == @user.id
-        erb :'users/show'
+      if !@user || !(session[:user_id] == @user.id)
+        flash[:error] = "You can't see another user's dashboard"
+        redirect to '/'
       else
-       flash[:error] = "You can't see another user's dashboard"
-       redirect to '/'
+        erb :'users/show'
       end
     end
   end
