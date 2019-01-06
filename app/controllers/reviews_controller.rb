@@ -60,6 +60,31 @@ class ReviewsController < ApplicationController
     end
   end
 
+  patch '/reviews/:id' do
+    if logged_in?
+      if params[:content] == ""
+        # "You must write what you thought of the book"
+        redirect to "/reviews/#{params[:id]}/edit"
+      else
+        @review = Review.find_by_id(params[:id])
+        if @review && @review.user == current_user
+          if @review.update(content: params[:content], stars: params[:stars])
+            #"Review was successfully updated!"
+            redirect to "/reviews/#{@review.id}"
+          else
+            #"Something went wrong. Review was not updated."
+            redirect to "/reviews/#{@review.id}/edit"
+          end
+        else
+          #"Something went wrong. Review was not updated."
+          redirect to "/books"
+        end
+      end
+    else
+      redirect to '/'
+    end
+  end
+
 
 
 
