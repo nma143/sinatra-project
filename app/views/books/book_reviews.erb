@@ -3,6 +3,7 @@
   <p>(This book has no reviews yet)</p>
 
 <% else %>
+  <h4> Average Star Rating: <%=@avg_star_rating%></h4>
   <% @book.reviews.each do |review| %>
     <div>
       <p><b>Review By: <%= review.user.username %></b> </p>
