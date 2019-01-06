@@ -46,6 +46,21 @@ class ReviewsController < ApplicationController
     end
   end
 
+  get '/reviews/:id/edit' do
+    if logged_in?
+      @review = Review.find_by_id(params[:id])
+      if @review && @review.user == current_user
+        erb :'reviews/edit'
+      else
+        #Eventually show error: "You can't edit a review written by another user"
+        redirect to '/'
+      end
+    else
+      redirect to '/'
+    end
+  end
+
+
 
 
 

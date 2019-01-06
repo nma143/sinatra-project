@@ -1,0 +1,15 @@
+<form method="post" action="/reviews/<%=@review.id%>">
+  <p><b><%= @review.book.title %></b> <font size="-1">(by <%= @review.book.author %>)</font></p>
+  <input id="hidden" type="hidden" name="_method" value="PATCH">
+  <label for="stars">How many stars?:</label><br>
+  <input type="radio" name="stars" value="0" <% if @review.stars ==0 %> checked = "checked" <%end%>> 0 Stars<br>
+  <input type="radio" name="stars" value="1" <% if @review.stars ==1 %> checked = "checked" <%end%>> 1 Star<br>
+  <input type="radio" name="stars" value="2" <% if @review.stars ==2 %> checked = "checked" <%end%>> 2 Stars<br>
+  <input type="radio" name="stars" value="3" <% if @review.stars ==3 %> checked = "checked" <%end%>> 3 Stars<br>
+  <br>
+
+  <label for="content">What did you think?:</label><br>
+  <textarea name="content" rows="5" cols="40" style="resize:none;"><%= @review.content %></textarea>
+  <br>
+  <input type="submit" value="submit">
+</form>
