@@ -1,0 +1,16 @@
+<h3> Here are all the reviews for <%= @book.title %> <font size="-1">(by <%= @book.author %>)</font>:</h3>
+<% if @book.reviews.length ==0 %>
+  <p>(This book has no reviews yet)</p>
+
+<% else %>
+  <% @book.reviews.each do |review| %>
+    <div>
+      <p><b>Review By: <%= review.user.username %></b> </p>
+      <ul>
+      <li><p>Star Rating: <%= review.stars %></p></li>
+      <li><p>Content: <%= review.content %></p></li>
+      </ul>
+    </div>
+  <% end %>
+
+<% end %>
