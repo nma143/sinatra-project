@@ -16,11 +16,12 @@ class ReviewsController < ApplicationController
       redirect to '/'
     else
       if params[:content] == ""
-        #eventually show an error: "You must write what you thought of the book"
+        flash[:error] = "You must write what you thought of the book"
         redirect to '/reviews/new'
       else
         @review = Review.new(:content => params[:content], :stars => params[:stars], :user_id => session[:user_id], :book_id => params[:book_id])
         @review.save
+        flash[:message] = "Review successfully created"
         redirect to "/users/#{current_user.slug}"
       end
     end
@@ -40,7 +41,7 @@ class ReviewsController < ApplicationController
       @review = Review.find_by_id(params[:id])
       if @review && @review.user == current_user
         @review.delete
-        #eventually show message: "Review was successfully deleted!"
+        flash[:message] = "Review was successfully deleted!"
       end
       redirect to "/users/#{current_user.slug}"
     else
@@ -54,7 +55,7 @@ class ReviewsController < ApplicationController
       if @review && @review.user == current_user
         erb :'reviews/edit'
       else
-        #Eventually show error: "You can't edit a review written by another user"
+        flash[:error] = "You can't edit a review written by another user"
         redirect to '/'
       end
     else
@@ -65,20 +66,20 @@ class ReviewsController < ApplicationController
   patch '/reviews/:id' do
     if logged_in?
       if params[:content] == ""
-        # "You must write what you thought of the book"
+        flash[:error] = "You must write what you thought of the book"
         redirect to "/reviews/#{params[:id]}/edit"
       else
         @review = Review.find_by_id(params[:id])
         if @review && @review.user == current_user
           if @review.update(content: params[:content], stars: params[:stars])
-            #"Review was successfully updated!"
+            flash[:message] = "Review was successfully updated!"
             redirect to "/reviews/#{@review.id}"
           else
-            #"Something went wrong. Review was not updated."
+            flash[:error] = "Something went wrong. Review was not updated."
             redirect to "/reviews/#{@review.id}/edit"
           end
         else
-          #"Something went wrong. Review was not updated."
+          flash[:error] = "Something went wrong. Review was not updated."
           redirect to "/users/#{current_user.slug}"
         end
       end
@@ -86,9 +87,5 @@ class ReviewsController < ApplicationController
       redirect to '/'
     end
   end
-
-
-
-
 
 end
