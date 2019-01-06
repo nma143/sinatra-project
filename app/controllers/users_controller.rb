@@ -59,5 +59,18 @@ class UsersController < ApplicationController
     redirect to '/'
   end
 
+  get '/users/:slug' do
+    if !logged_in?
+      redirect to '/'
+    else
+      @user = User.find_by_slug(params[:slug])
+      if session[:user_id] == @user.id
+        erb :'users/show'
+      else
+       #"You can't see another user's dashboard"
+       redirect to '/'
+      end
+    end
+  end
 
 end
