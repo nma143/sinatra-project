@@ -20,7 +20,7 @@ class UsersController < ApplicationController
         redirect to '/signup'
       #if user account already exists with that email - user must sign up with a different email
       elsif User.find_by_email(params[:email])
-        flash[:error] = "Account already exsits under that email address. Use another email or go to the log in page"
+        flash[:error] = "Account already exists under that email address. Use another email or go to the log in page"
         redirect to '/signup'
       else
         @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
