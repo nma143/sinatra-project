@@ -25,7 +25,7 @@
     <% if book.reviews.size >=1 %>
       <% star_ratings = book.reviews.collect {|review| review.stars} %>
       <li><%= book.title %> <font size="-1">(by <%= book.author %>)</font>
-      - Avg Star Rating: <%= star_ratings.sum/star_ratings.size.to_f %>
+      - Avg Star Rating: <%= (star_ratings.sum/star_ratings.size.to_f).round(1) %>
       - <a href="/books/<%=book.slug %>">See book reviews</a>
       </li>
     <% else %>

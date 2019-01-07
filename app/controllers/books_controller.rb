@@ -14,7 +14,7 @@ class BooksController < ApplicationController
       @book = Book.find_by_slug(params[:slug])
       if @book
         star_ratings = @book.reviews.collect {|review| review.stars}
-        @avg_star_rating = star_ratings.sum/star_ratings.size.to_f
+        @avg_star_rating = (star_ratings.sum/star_ratings.size.to_f).round(1)
       else
         flash[:error] = "That book could not be found"
         redirect to '/'
