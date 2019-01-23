@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   get '/books' do
     if logged_in?
       @books = Book.all
-      erb :'books/book_list'
+      erb :'books/show'
     else
       redirect to '/'
     end
