@@ -15,12 +15,16 @@ class UsersController < ApplicationController
     else
       #don't accept invalid email addresss formats
       email_ok = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)\z/.match(params[:email])
+      slug = params[:username].downcase.gsub(" ","-")
       if !email_ok
         flash[:error] = "Invalid email format"
         redirect to '/signup'
       #if user account already exists with that email - user must sign up with a different email
       elsif User.find_by_email(params[:email])
         flash[:error] = "Account already exists under that email address. Use another email or go to the log in page"
+        redirect to '/signup'
+      elsif User.find_by_slug(slug)
+        flash[:error] = "Username is already in use. Please pick another"
         redirect to '/signup'
       else
         @user = User.new(:username => params[:username], :email =>params[:email], :password =>params[:password])
