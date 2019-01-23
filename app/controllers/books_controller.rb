@@ -20,7 +20,7 @@ class BooksController < ApplicationController
         redirect to '/'
       end
 
-      erb :'books/book_reviews'
+      erb :'books/show'
     else
       redirect to '/'
     end
